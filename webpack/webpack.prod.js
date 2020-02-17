@@ -2,6 +2,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
 const commonPaths = require('./paths');
 
@@ -73,6 +74,21 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: `${commonPaths.cssFolder}/[name].css`,
       chunkFilename: `${commonPaths.cssFolder}/[name].css`,
+    }),
+    new SentryWebpackPlugin({
+      release: '0.1.2',
+      include: ['./src', './build'],
+      ignoreFile: '.sentrycliignore',
+      ignore: [
+        'node_modules',
+        'webpack.config.js',
+        '__mocks__',
+        '__tests__',
+        'babel.config.js',
+        'setupTests.js',
+      ],
+      configFile: 'sentry.properties',
+      ext: ['js', 'map', 'jsbundle', 'bundle', 'jsx'],
     }),
   ],
   devtool: 'source-map',

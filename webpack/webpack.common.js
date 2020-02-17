@@ -71,5 +71,10 @@ module.exports = {
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async',
     }),
+    new webpack.DefinePlugin({
+      'process.env.SENTRY_WEBPACK_DSN': JSON.stringify(
+        process.env.SENTRY_WEBPACK_DSN,
+      ),
+    }),
   ],
 };
